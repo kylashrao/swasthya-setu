@@ -36,23 +36,45 @@ def test_demo_navigation_findings_and_persisted_receipts(tmp_path, monkeypatch):
     assert ui.selectbox[0].label == "Load Demo Sample"
     assert not database.exists()
 
+    assert ui.subheader[0].value == "Manual Time-Saved Estimator"
+    assert any("Illustrative workflow estimate" in item.value and "No runtimes were measured" in item.value
+               for item in ui.caption)
+    assert {item.label: item.value for item in ui.metric} == {
+        "Manual review": "5.00 h", "Deterministic checks": "0.17 h", "Estimated time saved": "4.83 h",
+    }
+    assert ui.number_input[0].label == "Cases in batch"
+    ui.number_input[0].set_value(60).run()
+    assert {item.label: item.value for item in ui.metric} == {
+        "Manual review": "30.00 h", "Deterministic checks": "1.00 h", "Estimated time saved": "29.00 h",
+    }
+    roadmap = ui.expander[0]
+    assert roadmap.label == "Roadmap & Next Milestones"
+    shipped, planned = roadmap.markdown[0].value.split("**Planned next phases**")
+    for item in ("Shipped today", "VaidyaSetu", "Ayushman-Sarathi", "SHA-256", "70 pytest tests"):
+        assert item in shipped
+    for item in ("CT-04", "CT-01", "CTRI", "XML and JSON", "four-worker", "Schedule M CMC",
+                 "PubMed and ICMR", "Hindi, Kannada, Tamil, Bengali, and Marathi",
+                 "back-translation", "(SEC) query simulation"):
+        assert item in planned
+    assert not database.exists()
+
     ui.selectbox[0].select("synthetic-wardha-fail").run()
     ui.button[0].click().run()
     assert not ui.exception
     assert not ui.error
-    assert {item.label for item in ui.metric} == {"Fail", "Pass", "Review"}
+    assert {"Fail", "Pass", "Review"} <= {item.label for item in ui.metric}
     assert any("ctri.prospective_registration" in item.value for item in ui.markdown)
     assert any("CTRI FAQ" in item.value for item in ui.caption)
     _check_receipt(ui, database, 1, "vaidyasetu")
 
     ui.sidebar.radio[0].set_value("Ayushman-Sarathi").run()
     assert ui.header[0].value == "Ayushman-Sarathi"
-    assert not ui.expander
+    assert [item.label for item in ui.expander] == ["Roadmap & Next Milestones"]
     ui.selectbox[0].select("passing_claim").run()
     ui.button[0].click().run()
     assert not ui.exception
     assert not ui.error
-    assert len(ui.expander) == 1
+    assert len(ui.expander) == 2
     assert ui.expander[0].label.startswith("Pass (")
     assert any("₹31,000.00" in item.value for item in ui.markdown)
     _check_receipt(ui, database, 2, "ayushman_sarathi")

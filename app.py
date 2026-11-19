@@ -112,6 +112,40 @@ def _show_result(module, result, reference, receipt):
     st.code(receipt.sha256, language=None)
 
 
+def _show_estimator():
+    st.subheader("Manual Time-Saved Estimator")
+    st.caption(
+        "Illustrative workflow estimate. Assumes 30 minutes of manual review and "
+        "1 minute of deterministic checks per case. Excludes evidence preparation and follow-up review. "
+        "No runtimes were measured."
+    )
+    cases = st.number_input("Cases in batch", min_value=1, max_value=100_000, value=10, step=1)
+    manual, checks, difference = st.columns(3)
+    manual.metric("Manual review", f"{cases * 30 / 60:,.2f} h")
+    checks.metric("Deterministic checks", f"{cases / 60:,.2f} h")
+    difference.metric("Estimated time saved", f"{cases * 29 / 60:,.2f} h")
+
+
+def _show_roadmap():
+    with st.expander("Roadmap & Next Milestones"):
+        st.markdown(
+            """**Shipped today**
+
+- VaidyaSetu checks NDCT 2019 and the January 2026 amendment, CTRI consistency, and vernacular informed consent.
+- Ayushman-Sarathi checks AB PM-JAY package mapping, schedule-based rates, and mandatory pre-op attachments.
+- Local SQLite audit receipts record a SHA-256 digest of finding metadata.
+- 70 pytest tests cover the core, both modules, and the Streamlit demo.
+
+**Planned next phases**
+
+1. Automated CT-04, CT-01, and CTRI drafting with XML and JSON output.
+2. Parallel four-worker dossier orchestration.
+3. Schedule M CMC checks and risk synthesis from PubMed and ICMR sources.
+4. Automated Hindi, Kannada, Tamil, Bengali, and Marathi informed consent form translation and back-translation.
+5. Interactive Subject Expert Committee (SEC) query simulation."""
+        )
+
+
 def main():
     st.set_page_config(page_title="SwasthyaSetu", layout="wide")
     view = st.sidebar.radio("Compliance module", tuple(VIEWS))
@@ -158,6 +192,9 @@ def main():
     saved = st.session_state.get(state_key)
     if saved and saved[0] == snapshot:
         _show_result(module, *saved[1:])
+
+    _show_estimator()
+    _show_roadmap()
 
 
 if __name__ == "__main__":
