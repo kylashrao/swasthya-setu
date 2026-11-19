@@ -1,0 +1,280 @@
+[
+  {
+    "case_ref": "synthetic-wardha-pass",
+    "as_of": "2026-06-01",
+    "ct10": {
+      "purpose": "clinical_trial",
+      "submitted_as": "prior_permission",
+      "drug_classes": [
+        "other"
+      ],
+      "received": {
+        "date": "2026-03-09",
+        "reference": "fictional-ct10-receipt.pdf"
+      },
+      "authority_response": {
+        "date": "2026-04-06",
+        "reference": "fictional-ct11.pdf"
+      },
+      "response_type": "ct11",
+      "manufacture_started": {
+        "date": "2026-04-08",
+        "reference": "fictional-batch-log.pdf"
+      }
+    },
+    "trial": {
+      "protocol": {
+        "reference": "fictional-ec-approved-protocol.pdf",
+        "protocol_id": "SYN-WD-026",
+        "protocol_version": "2.0",
+        "sponsor": "Sample Academic Research Unit",
+        "design": "Phase II randomized parallel-group active-controlled",
+        "india_sites": [
+          "Sample District Hospital, Wardha"
+        ]
+      },
+      "registry": {
+        "reference": "fictional-ctri-export.pdf",
+        "protocol_id": "SYN-WD-026",
+        "protocol_version": "2.0",
+        "sponsor": "Sample Academic Research Unit",
+        "design": "Phase II randomized parallel-group active-controlled",
+        "india_sites": [
+          "Sample District Hospital, Wardha"
+        ],
+        "ctri_id": "CTRI/2026/04/999991",
+        "registered_on": "2026-04-14",
+        "actual_first_enrolment": "2026-04-20"
+      },
+      "first_enrolment": {
+        "date": "2026-04-20",
+        "reference": "fictional-enrolment-summary.pdf"
+      },
+      "enrolment_started": true,
+      "required_languages": {
+        "Sample District Hospital, Wardha": [
+          "mr"
+        ]
+      },
+      "randomized": true,
+      "placebo_controlled": false,
+      "prorated_payment": false,
+      "consent_packs": [
+        {
+          "site": "Sample District Hospital, Wardha",
+          "language": "mr",
+          "protocol_id": "SYN-WD-026",
+          "protocol_version": "2.0",
+          "information_sheet": {
+            "reference": "fictional-mr-pis-v2.2.pdf",
+            "version": "2.2",
+            "ec_approved_version": "2.2",
+            "approval": {
+              "date": "2026-04-07",
+              "reference": "fictional-ec-letter.pdf"
+            },
+            "readable": true
+          },
+          "written_form": {
+            "reference": "fictional-mr-icf-v2.1.pdf",
+            "version": "2.1",
+            "ec_approved_version": "2.1",
+            "approval": {
+              "date": "2026-04-07",
+              "reference": "fictional-ec-letter.pdf"
+            },
+            "readable": true
+          },
+          "language_review": {
+            "date": "2026-04-09",
+            "reference": "fictional-marathi-review.pdf"
+          },
+          "language_understandable": true,
+          "first_used_on": "2026-04-20",
+          "elements": {
+            "alternatives": "fictional-mr-pis-v2.2.pdf#page=1",
+            "confidentiality_and_access": "fictional-mr-pis-v2.2.pdf#page=1",
+            "contacts": "fictional-mr-pis-v2.2.pdf#page=1",
+            "expected_benefits": "fictional-mr-pis-v2.2.pdf#page=1",
+            "free_medical_management": "fictional-mr-pis-v2.2.pdf#page=2",
+            "injury_or_death_compensation": "fictional-mr-pis-v2.2.pdf#page=2",
+            "participant_responsibilities": "fictional-mr-pis-v2.2.pdf#page=2",
+            "participation_duration": "fictional-mr-pis-v2.2.pdf#page=2",
+            "possible_lack_of_therapeutic_effect": "fictional-mr-pis-v2.2.pdf#page=3",
+            "procedures": "fictional-mr-pis-v2.2.pdf#page=3",
+            "randomization_and_treatment_schedule": "fictional-mr-pis-v2.2.pdf#page=3",
+            "research_purpose": "fictional-mr-pis-v2.2.pdf#page=3",
+            "risks": "fictional-mr-pis-v2.2.pdf#page=4",
+            "voluntary_withdrawal_without_penalty": "fictional-mr-pis-v2.2.pdf#page=4"
+          }
+        }
+      ]
+    },
+    "calendar": {
+      "reference": "synthetic-calendar-2026",
+      "valid_from": "2026-01-01",
+      "valid_through": "2026-12-31",
+      "working_weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "holidays": [
+        "2026-04-14",
+        "2026-05-01"
+      ]
+    }
+  },
+  {
+    "case_ref": "synthetic-wardha-fail",
+    "as_of": "2026-06-01",
+    "ct10": {
+      "purpose": "nonclinical_testing",
+      "submitted_as": "prior_intimation",
+      "drug_classes": [
+        "beta_lactam"
+      ],
+      "received": {
+        "date": "2026-03-09",
+        "reference": "fictional-ct10-receipt.pdf"
+      },
+      "authority_response": {
+        "date": "2026-05-15",
+        "reference": "fictional-rejection.pdf"
+      },
+      "response_type": "rejection",
+      "manufacture_started": {
+        "date": "2026-04-08",
+        "reference": "fictional-batch-log.pdf"
+      }
+    },
+    "trial": {
+      "protocol": {
+        "reference": "fictional-ec-approved-protocol.pdf",
+        "protocol_id": "SYN-WD-026",
+        "protocol_version": "2.0",
+        "sponsor": "Sample Academic Research Unit",
+        "design": "Phase II randomized parallel-group active-controlled",
+        "india_sites": [
+          "Sample District Hospital, Wardha"
+        ]
+      },
+      "registry": {
+        "reference": "fictional-ctri-export.pdf",
+        "protocol_id": "SYN-WD-026",
+        "protocol_version": "1.0",
+        "sponsor": "Sample Academic Research Unit",
+        "design": "Phase II randomized parallel-group active-controlled",
+        "india_sites": [
+          "Sample District Hospital, Wardha"
+        ],
+        "ctri_id": "CTRI/2026/04/999991",
+        "registered_on": "2026-04-21",
+        "actual_first_enrolment": "2026-04-20"
+      },
+      "first_enrolment": {
+        "date": "2026-04-20",
+        "reference": "fictional-enrolment-summary.pdf"
+      },
+      "enrolment_started": true,
+      "required_languages": {
+        "Sample District Hospital, Wardha": [
+          "mr"
+        ]
+      },
+      "randomized": true,
+      "placebo_controlled": false,
+      "prorated_payment": false,
+      "consent_packs": [
+        {
+          "site": "Sample District Hospital, Wardha",
+          "language": "mr",
+          "protocol_id": "SYN-WD-026",
+          "protocol_version": "2.0",
+          "information_sheet": {
+            "reference": "fictional-mr-pis-v2.2.pdf",
+            "version": "2.2",
+            "ec_approved_version": "2.2",
+            "approval": {
+              "date": "2026-04-07",
+              "reference": "fictional-ec-letter.pdf"
+            },
+            "readable": true
+          },
+          "written_form": {
+            "reference": "fictional-mr-icf-v2.1.pdf",
+            "version": "2.1",
+            "ec_approved_version": "1.0",
+            "approval": {
+              "date": "2026-04-07",
+              "reference": "fictional-ec-letter.pdf"
+            },
+            "readable": true
+          },
+          "language_review": {
+            "date": "2026-04-09",
+            "reference": "fictional-marathi-review.pdf"
+          },
+          "language_understandable": true,
+          "first_used_on": "2026-04-20",
+          "elements": {
+            "alternatives": "fictional-mr-pis-v2.2.pdf#page=1",
+            "confidentiality_and_access": "fictional-mr-pis-v2.2.pdf#page=1",
+            "contacts": "fictional-mr-pis-v2.2.pdf#page=1",
+            "expected_benefits": "fictional-mr-pis-v2.2.pdf#page=1",
+            "free_medical_management": "fictional-mr-pis-v2.2.pdf#page=2",
+            "participant_responsibilities": "fictional-mr-pis-v2.2.pdf#page=2",
+            "participation_duration": "fictional-mr-pis-v2.2.pdf#page=2",
+            "possible_lack_of_therapeutic_effect": "fictional-mr-pis-v2.2.pdf#page=3",
+            "procedures": "fictional-mr-pis-v2.2.pdf#page=3",
+            "randomization_and_treatment_schedule": "fictional-mr-pis-v2.2.pdf#page=3",
+            "research_purpose": "fictional-mr-pis-v2.2.pdf#page=3",
+            "risks": "fictional-mr-pis-v2.2.pdf#page=4",
+            "voluntary_withdrawal_without_penalty": "fictional-mr-pis-v2.2.pdf#page=4"
+          }
+        }
+      ]
+    },
+    "calendar": {
+      "reference": "synthetic-calendar-2026",
+      "valid_from": "2026-01-01",
+      "valid_through": "2026-12-31",
+      "working_weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "holidays": [
+        "2026-04-14",
+        "2026-05-01"
+      ]
+    }
+  },
+  {
+    "case_ref": "synthetic-testing-pass",
+    "as_of": "2026-06-01",
+    "ct10": {
+      "purpose": "analytical_testing",
+      "drug_classes": [
+        "other"
+      ],
+      "submitted_as": "prior_intimation",
+      "received": {
+        "date": "2026-04-06",
+        "reference": "fictional-nsws-ct10.pdf"
+      },
+      "acknowledgement": {
+        "date": "2026-04-06",
+        "reference": "fictional-nsws-ack.pdf"
+      },
+      "manufacture_started": {
+        "date": "2026-04-08",
+        "reference": "fictional-lab-batch-log.pdf"
+      }
+    }
+  }
+]

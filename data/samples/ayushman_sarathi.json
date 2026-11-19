@@ -1,0 +1,282 @@
+{
+  "schedule": {
+    "version": "synthetic-mh-rural-2026-v1",
+    "source_ref": "Synthetic MH rural tariff 2026, modeled on NHA HBP 2.2",
+    "sha_code": "MH",
+    "tariff_profile": "rural-base",
+    "effective_from": "2026-04-01",
+    "effective_through": "2026-12-31",
+    "surgical_grouping": "admission",
+    "surgical_rank_basis_points": [
+      10000,
+      5000,
+      2500
+    ],
+    "rounding": "half_up",
+    "rounding_unit_paise": 1,
+    "packages": [
+      {
+        "code": "SYN-GS01",
+        "procedure_keys": [
+          "open inguinal hernia repair"
+        ],
+        "kind": "surgical",
+        "tariff_paise": 2300000,
+        "source_ref": "Synthetic MH rural schedule, SYN-GS01",
+        "preop_checklist": [
+          {
+            "kind": "signed_preauthorization_request",
+            "scope": "admission",
+            "deadline": "preauthorization",
+            "text_required": true
+          },
+          {
+            "kind": "preoperative_surgical_assessment",
+            "scope": "procedure",
+            "deadline": "both",
+            "text_required": true
+          }
+        ],
+        "preauthorization_required": true
+      },
+      {
+        "code": "SYN-GS02",
+        "procedure_keys": [
+          "open umbilical hernia repair"
+        ],
+        "kind": "surgical",
+        "tariff_paise": 1600000,
+        "source_ref": "Synthetic MH rural schedule, SYN-GS02",
+        "preop_checklist": [
+          {
+            "kind": "signed_preauthorization_request",
+            "scope": "admission",
+            "deadline": "preauthorization",
+            "text_required": true
+          },
+          {
+            "kind": "preoperative_ultrasound_image",
+            "scope": "procedure",
+            "deadline": "both",
+            "text_required": false
+          }
+        ],
+        "preauthorization_required": true
+      }
+    ]
+  },
+  "scenarios": {
+    "passing_preauthorization": {
+      "admission_ref": "synthetic-wardha-admission-014",
+      "stage": "preauthorization",
+      "as_of": "2026-05-12T10:00:00+05:30",
+      "sha_code": "MH",
+      "tariff_profile": "rural-base",
+      "tariff_date": "2026-05-12",
+      "preauthorization_submitted_at": "2026-05-12T09:15:00+05:30",
+      "procedures": [
+        {
+          "line_ref": "line-02",
+          "source_ref": "synthetic-operative-plan.pdf#line-02",
+          "procedure_key": "open umbilical hernia repair",
+          "submitted_code": "SYN-GS02",
+          "submitted_paise": 800000,
+          "ot_session_ref": "ot-01",
+          "surgery_at": "2026-05-13T10:00:00+05:30"
+        },
+        {
+          "line_ref": "line-01",
+          "source_ref": "synthetic-operative-plan.pdf#line-01",
+          "procedure_key": "open inguinal hernia repair",
+          "submitted_code": "SYN-GS01",
+          "submitted_paise": 2300000,
+          "ot_session_ref": "ot-01",
+          "surgery_at": "2026-05-13T10:00:00+05:30"
+        }
+      ],
+      "attachments": [
+        {
+          "reference": "synthetic-prf.pdf",
+          "kind": "signed_preauthorization_request",
+          "admission_ref": "synthetic-wardha-admission-014",
+          "line_ref": null,
+          "readable": true,
+          "has_extractable_text": true,
+          "recorded_at": "2026-05-12T08:30:00+05:30",
+          "uploaded_at": "2026-05-12T09:00:00+05:30"
+        },
+        {
+          "reference": "synthetic-assessment.pdf",
+          "kind": "preoperative_surgical_assessment",
+          "admission_ref": "synthetic-wardha-admission-014",
+          "line_ref": "line-01",
+          "readable": true,
+          "has_extractable_text": true,
+          "recorded_at": "2026-05-12T08:30:00+05:30",
+          "uploaded_at": "2026-05-12T09:00:00+05:30"
+        },
+        {
+          "reference": "synthetic-ultrasound.pdf",
+          "kind": "preoperative_ultrasound_image",
+          "admission_ref": "synthetic-wardha-admission-014",
+          "line_ref": "line-02",
+          "readable": true,
+          "has_extractable_text": false,
+          "recorded_at": "2026-05-12T08:30:00+05:30",
+          "uploaded_at": "2026-05-12T09:00:00+05:30"
+        }
+      ],
+      "authorizations": [],
+      "submitted_total_paise": 3100000
+    },
+    "passing_claim": {
+      "admission_ref": "synthetic-wardha-admission-014",
+      "stage": "claim",
+      "as_of": "2026-05-17T10:00:00+05:30",
+      "sha_code": "MH",
+      "tariff_profile": "rural-base",
+      "tariff_date": "2026-05-12",
+      "preauthorization_submitted_at": "2026-05-12T09:15:00+05:30",
+      "procedures": [
+        {
+          "line_ref": "line-02",
+          "source_ref": "synthetic-operative-plan.pdf#line-02",
+          "procedure_key": "open umbilical hernia repair",
+          "submitted_code": "SYN-GS02",
+          "submitted_paise": 800000,
+          "ot_session_ref": "ot-01",
+          "surgery_at": "2026-05-13T10:00:00+05:30"
+        },
+        {
+          "line_ref": "line-01",
+          "source_ref": "synthetic-operative-plan.pdf#line-01",
+          "procedure_key": "open inguinal hernia repair",
+          "submitted_code": "SYN-GS01",
+          "submitted_paise": 2300000,
+          "ot_session_ref": "ot-01",
+          "surgery_at": "2026-05-13T10:00:00+05:30"
+        }
+      ],
+      "attachments": [
+        {
+          "reference": "synthetic-prf.pdf",
+          "kind": "signed_preauthorization_request",
+          "admission_ref": "synthetic-wardha-admission-014",
+          "line_ref": null,
+          "readable": true,
+          "has_extractable_text": true,
+          "recorded_at": "2026-05-12T08:30:00+05:30",
+          "uploaded_at": "2026-05-12T09:00:00+05:30"
+        },
+        {
+          "reference": "synthetic-assessment.pdf",
+          "kind": "preoperative_surgical_assessment",
+          "admission_ref": "synthetic-wardha-admission-014",
+          "line_ref": "line-01",
+          "readable": true,
+          "has_extractable_text": true,
+          "recorded_at": "2026-05-12T08:30:00+05:30",
+          "uploaded_at": "2026-05-12T09:00:00+05:30"
+        },
+        {
+          "reference": "synthetic-ultrasound.pdf",
+          "kind": "preoperative_ultrasound_image",
+          "admission_ref": "synthetic-wardha-admission-014",
+          "line_ref": "line-02",
+          "readable": true,
+          "has_extractable_text": false,
+          "recorded_at": "2026-05-12T08:30:00+05:30",
+          "uploaded_at": "2026-05-12T09:00:00+05:30"
+        }
+      ],
+      "authorizations": [
+        {
+          "reference": "synthetic-tms-approval.pdf#line-01",
+          "admission_ref": "synthetic-wardha-admission-014",
+          "line_ref": "line-01",
+          "package_code": "SYN-GS01",
+          "approved_at": "2026-05-12T12:00:00+05:30"
+        },
+        {
+          "reference": "synthetic-tms-approval.pdf#line-02",
+          "admission_ref": "synthetic-wardha-admission-014",
+          "line_ref": "line-02",
+          "package_code": "SYN-GS02",
+          "approved_at": "2026-05-12T12:00:00+05:30"
+        }
+      ],
+      "submitted_total_paise": 3100000
+    },
+    "failing_claim": {
+      "admission_ref": "synthetic-wardha-admission-014",
+      "stage": "claim",
+      "as_of": "2026-05-17T10:00:00+05:30",
+      "sha_code": "MH",
+      "tariff_profile": "rural-base",
+      "tariff_date": "2026-05-12",
+      "preauthorization_submitted_at": "2026-05-12T09:15:00+05:30",
+      "procedures": [
+        {
+          "line_ref": "line-02",
+          "source_ref": "synthetic-operative-plan.pdf#line-02",
+          "procedure_key": "open umbilical hernia repair",
+          "submitted_code": "SYN-GS01",
+          "submitted_paise": 1600000,
+          "ot_session_ref": "ot-01",
+          "surgery_at": "2026-05-13T10:00:00+05:30"
+        },
+        {
+          "line_ref": "line-01",
+          "source_ref": "synthetic-operative-plan.pdf#line-01",
+          "procedure_key": "open inguinal hernia repair",
+          "submitted_code": "SYN-GS01",
+          "submitted_paise": 2300000,
+          "ot_session_ref": "ot-01",
+          "surgery_at": "2026-05-13T10:00:00+05:30"
+        }
+      ],
+      "attachments": [
+        {
+          "reference": "synthetic-prf.pdf",
+          "kind": "signed_preauthorization_request",
+          "admission_ref": "synthetic-wardha-admission-014",
+          "line_ref": null,
+          "readable": true,
+          "has_extractable_text": true,
+          "recorded_at": "2026-05-12T08:30:00+05:30",
+          "uploaded_at": "2026-05-12T09:00:00+05:30"
+        },
+        {
+          "reference": "synthetic-assessment.pdf",
+          "kind": "preoperative_surgical_assessment",
+          "admission_ref": "synthetic-wardha-admission-014",
+          "line_ref": "line-01",
+          "readable": true,
+          "has_extractable_text": false,
+          "recorded_at": "2026-05-12T08:30:00+05:30",
+          "uploaded_at": "2026-05-12T09:00:00+05:30"
+        },
+        {
+          "reference": "synthetic-ultrasound.pdf",
+          "kind": "preoperative_ultrasound_image",
+          "admission_ref": "synthetic-other-admission",
+          "line_ref": "line-02",
+          "readable": true,
+          "has_extractable_text": false,
+          "recorded_at": "2026-05-14T08:00:00+05:30",
+          "uploaded_at": "2026-05-14T09:00:00+05:30"
+        }
+      ],
+      "authorizations": [
+        {
+          "reference": "synthetic-tms-approval.pdf#line-01",
+          "admission_ref": "synthetic-wardha-admission-014",
+          "line_ref": "line-01",
+          "package_code": "SYN-GS01",
+          "approved_at": "2026-05-12T12:00:00+05:30"
+        }
+      ],
+      "submitted_total_paise": 3900000
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "case_ref": "synthetic-001",
+  "module": "vaidyasetu",
+  "rule_id": "ctri.registration",
+  "ruleset_version": "sample-v1",
+  "source_ref": "CTRI FAQ",
+  "outcome": "review",
+  "evidence_ref": "synthetic-protocol#page=1"
+}
