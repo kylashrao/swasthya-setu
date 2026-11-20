@@ -1,7 +1,6 @@
 """Streamlit entry point for the offline SwasthyaSetu demos."""
 
 import json
-import os
 import sqlite3
 from collections import Counter
 from pathlib import Path
@@ -9,7 +8,9 @@ from pathlib import Path
 import streamlit as st
 from pydantic import BaseModel, ConfigDict, TypeAdapter, ValidationError
 
-from core.audit_logger import AuditEvent, append_audit_batch
+from core.audit_workflow import audit_database, record_audit
+from core.vernacular_engine import DISCLAIMER, LANGUAGES, VerificationRequest, sample_phrases, verify
+from modules.vaidyasetu.sec_simulator import SimulationRequest, simulate
 from modules import ayushman_sarathi, vaidyasetu
 
 DATA = Path(__file__).resolve().parent / "data"
@@ -61,15 +62,6 @@ def _evaluate(module, sample, schedule):
 def _rupees(paise: int) -> str:
     rupees, remainder = divmod(paise, 100)
     return f"₹{rupees:,}.{remainder:02}"
-
-
-def _audit_evidence(finding) -> str | None:
-    line_ref = getattr(finding, "line_ref", None)
-    if line_ref is not None:
-        return json.dumps({"line_ref": line_ref, "references": finding.evidence_refs}, ensure_ascii=False)
-    if finding.evidence_refs:
-        return json.dumps(finding.evidence_refs, ensure_ascii=False)
-    return None
 
 
 def _show_result(module, result, reference, receipt):
@@ -134,17 +126,60 @@ def _show_roadmap():
 - VaidyaSetu checks NDCT 2019 and the January 2026 amendment, CTRI consistency, and vernacular informed consent.
 - Ayushman-Sarathi checks AB PM-JAY package mapping, schedule-based rates, and mandatory pre-op attachments.
 - Local SQLite audit receipts record a SHA-256 digest of finding metadata.
-- 70 pytest tests cover the core, both modules, and the Streamlit demo.
+- The original 70 pytest tests cover the core, both modules, and the Streamlit demo.
+- Hindi, Kannada, Tamil, Telugu, and Malayalam ICF comparison and SEC rehearsal are available in both interfaces.
 
 **Planned next phases**
 
 1. Automated CT-04, CT-01, and CTRI drafting with XML and JSON output.
 2. Parallel four-worker dossier orchestration.
 3. Schedule M CMC checks and risk synthesis from PubMed and ICMR sources.
-4. Automated Hindi, Kannada, Tamil, Bengali, and Marathi informed consent form translation and back-translation.
-5. Interactive Subject Expert Committee (SEC) query simulation."""
+4. Expand structured ICF and back-translation coverage beyond the current phrasebook. The broader Hindi, Kannada, Tamil, Bengali, and Marathi milestone includes adding Bengali and Marathi.
+5. Extend the interactive Subject Expert Committee (SEC) query simulation with more dossier-specific checklists."""
         )
 
+
+
+def _show_clinical_tools(case):
+    icf, sec = st.tabs(["Vernacular ICF", "SEC Query Simulator"])
+    with icf:
+        st.caption(DISCLAIMER)
+        language = st.selectbox("Consent language", tuple(LANGUAGES), format_func=LANGUAGES.get)
+        sample = {key: row["en"] for key, row in sample_phrases().items()}
+        source = st.text_area("English clauses (JSON)", json.dumps(sample, ensure_ascii=False, indent=2))
+        localized = st.text_area("Localized clauses (optional JSON)")
+        reverse = st.text_area("English back-translation (optional JSON)")
+        assisted = st.checkbox("Use configured local glossary")
+        if st.button("Verify consent clauses"):
+            try:
+                request = VerificationRequest(language=language, source=json.loads(source),
+                                              localized=json.loads(localized) if localized.strip() else None,
+                                              back_translation=json.loads(reverse) if reverse.strip() else None,
+                                              use_assisted=assisted)
+                st.json(verify(request))
+            except ValueError as exc:
+                st.error(str(exc) if not isinstance(exc, ValidationError) else "Check the consent payload fields.")
+    with sec:
+        st.caption(f"Selected dossier · {case.case_ref}")
+        population = st.text_input("Proposed population (optional)", max_chars=4000)
+        request = SimulationRequest(case=case, population=population.strip() or None)
+        preview = simulate(request)
+        st.caption(preview["notice"])
+        responses = {}
+        for question in preview["questions"]:
+            st.markdown(question["prompt"])
+            responses[question["id"]] = {}
+            for item in question["checklist"]:
+                key = f"{case.case_ref}.{question['id']}.{item['id']}"
+                statement = st.text_input(item["requirement"], key=key, max_chars=4000)
+                reference = st.text_input("Evidence reference", key=f"{key}.ref", max_chars=4000)
+                if statement.strip() and reference.strip():
+                    responses[question["id"]][item["id"]] = {
+                        "statement": statement, "evidence_ref": reference,
+                    }
+        if st.button("Evaluate sponsor responses"):
+            st.json(simulate(SimulationRequest(case=case, population=request.population,
+                                               responses=responses)))
 
 def main():
     st.set_page_config(page_title="SwasthyaSetu", layout="wide")
@@ -170,20 +205,13 @@ def main():
     selected = st.selectbox("Load Demo Sample", tuple(samples),
                             format_func=lambda key: labels.get(key, key), key=f"sample_{module}")
     state_key = f"audit_{module}"
-    database = Path(os.environ.get("SWASTHYASETU_AUDIT_DB", DATA / "audit.sqlite3"))
+    database = audit_database(DATA)
     snapshot = (selected, samples[selected], schedule, database)
     if st.button("Run demo audit", type="primary"):
         st.session_state.pop(state_key, None)
         try:
             result, reference = _evaluate(module, samples[selected], schedule)
-            events = tuple(
-                AuditEvent(case_ref=reference, module=module, rule_id=finding.rule_id,
-                           ruleset_version=result.ruleset_version, outcome=finding.outcome,
-                           source_ref=finding.source_ref,
-                           evidence_ref=_audit_evidence(finding))
-                for finding in result.findings
-            )
-            receipt = append_audit_batch(database, events)
+            receipt = record_audit(database, module, result, reference)
         except (ValidationError, OSError, sqlite3.Error) as exc:
             st.error(f"Could not complete the demo audit. {exc}")
         else:
@@ -195,6 +223,8 @@ def main():
 
     _show_estimator()
     _show_roadmap()
+    if module == "vaidyasetu":
+        _show_clinical_tools(samples[selected])
 
 
 if __name__ == "__main__":
