@@ -1,11 +1,27 @@
 {
-  "builds": [
-    { "src": "frontend/package.json", "use": "@vercel/static-build", "config": { "distDir": "out", "routePrefix": "/" } },
-    { "src": "api/index.py", "use": "@vercel/python", "config": { "includeFiles": ["data/samples/**"] } }
-  ],
-  "routes": [
-    { "src": "/api(?:/.*)?", "dest": "/api/index.py" },
-    { "handle": "filesystem" },
-    { "src": "/", "dest": "/index.html" }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "api": {
+      "root": ".",
+      "entrypoint": "api/index.py"
+    },
+    "frontend": {
+      "root": "frontend",
+      "framework": "nextjs"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "api"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "frontend"
+      }
+    }
   ]
 }
